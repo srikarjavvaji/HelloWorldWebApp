@@ -4,23 +4,14 @@ node {
             checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfig: [[url: 'https://github.com/srikarjavvaji/HelloWorldWebApp.git']]])
         }
 
-        stage('Set Environment') {
-            environment {
-                PATH = "${env.CUSTOM_PATH}"
-            }
-        }
-
         stage('Build') {
-            // You can access the PATH environment variable like this:
-            def mavenPath = env.PATH
-
-            // Use the 'sh' step to run Maven with the correct PATH:
-            sh "${mavenPath}/mvn clean install"
+            // Specify the complete path to the Maven executable
+            sh '/opt/apache-maven-3.8.8/bin/mvn clean install'
         }
 
         stage('Run Jetty Server') {
-            // Use the 'sh' step to run Maven with the correct PATH:
-            sh "${mavenPath}/mvn jetty:run"
+            // Specify the complete path to the Maven executable
+            sh '/opt/apache-maven-3.8.8/bin/mvn jetty:run'
         }
     } catch (Exception e) {
         currentBuild.result = 'FAILURE'
