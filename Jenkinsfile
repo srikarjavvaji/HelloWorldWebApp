@@ -3,25 +3,24 @@ node {
 
     try {
         stage('Checkout') {
-            checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/srikarjavvaji/HelloWorldWebApp.git']]])
+            checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/srikarjavvaji/HelloWorldWebApp.git']])
         }
 
         stage('Build') {
-            // Specify the full path to the Maven executable
             sh "${mavenHome}/bin/mvn clean package"
         }
 
         stage('Run') {
-            // Start the Jetty server
+            echo "Running the application..."
             def server = new ProcessBuilder('java', '-jar', 'target/HelloWorldJavaApp-jar-with-dependencies.jar')
             server.redirectErrorStream(true)
             def process = server.start()
 
-            // Wait for the process to complete
+            echo "Waiting for the process to complete..."
             def exitCode = process.waitFor()
 
             if (exitCode != 0) {
-                error "Failed to start the application"
+                error "Failed to start the application (Exit Code: $exitCode)"
             }
         }
     } catch (Exception e) {
@@ -29,7 +28,6 @@ node {
         error("An error occurred: ${e.message}")
     } finally {
         stage('Cleanup') {
-            // Stop the Jetty server if it's running
             sh 'pkill -f HelloWorldJavaApp-jar-with-dependencies.jar'
         }
     }
