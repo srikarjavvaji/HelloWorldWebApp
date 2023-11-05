@@ -4,6 +4,12 @@ node {
             checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfig: [[url: 'https://github.com/srikarjavvaji/HelloWorldWebApp.git']]])
         }
 
+        stage('Set Environment') {
+            environment {
+                PATH = "${env.CUSTOM_PATH}"
+            }
+        }
+
         stage('Build') {
             // You can access the PATH environment variable like this:
             def mavenPath = env.PATH
