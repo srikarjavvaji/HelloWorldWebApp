@@ -1,7 +1,7 @@
 node {
     try {
         stage('Checkout') {
-            checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfig: [[url: 'https://github.com/srikarjavvaji/HelloWorldWebApp.git']])
+            checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfig: [[url: 'https://github.com/srikarjavvaji/HelloWorldWebApp.git']]])
         }
 
         stage('Build') {
