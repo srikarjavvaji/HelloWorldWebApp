@@ -1,4 +1,6 @@
 node {
+    def mavenHome = '/opt/apache-maven-3.8.8' // Specify the correct path to your Maven installation
+
     try {
         stage('Checkout') {
             checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/srikarjavvaji/HelloWorldWebApp.git']]])
@@ -6,7 +8,7 @@ node {
 
         stage('Build') {
             // Specify the full path to the Maven executable
-            sh '/opt/apache-maven-3.8.8/bin/mvn clean package'
+            sh "${mavenHome}/bin/mvn clean package"
         }
 
         stage('Run') {
