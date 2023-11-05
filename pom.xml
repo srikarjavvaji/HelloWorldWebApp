@@ -6,6 +6,9 @@
     <groupId>com.example</groupId>
     <artifactId>HelloWorldWebApp</artifactId>
     <version>1.0-SNAPSHOT</version>
+    
+    <!-- Specify the packaging type as "war" -->
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
