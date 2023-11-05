@@ -5,8 +5,8 @@ node {
         }
 
         stage('Build') {
-            // Compile and package the Java application using Maven
-            sh 'mvn clean package'
+            // Specify the full path to the Maven executable
+            sh '/opt/apache-maven-3.8.8/bin/mvn clean package'
         }
 
         stage('Run') {
